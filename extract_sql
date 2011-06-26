@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+
+def read_record(f):
+    i = 0
+    record = ""
+    b = f.read(1)
+    
+    if not b: return ""
+    
+    while i < 10:
+        if b == '\x01':
+            i = i + 1
+        record += b
+        b = f.read(1)
+    return record
+
+f = open("data/caracal-dbql-20110615")
+
+i = 100
+
+while i > 0:
+    print " ".join(read_record(f).split('\x01')[-2].split('\r'))
+    i -= 1
